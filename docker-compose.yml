@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: jobtrackr-db
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: job-tracker
+    volumes:
+      - mongodb_data:/data/db
+
+  server:
+    build: ./server
+    container_name: jobtrackr-server
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      MONGO_URI: mongodb://mongodb:27017/job-tracker
+      JWT_SECRET: job-tracker-super-secret-production-key
+      CLIENT_URL: http://localhost:80
+    depends_on:
+      - mongodb
+    volumes:
+      - uploads_data:/app/uploads
+
+  client:
+    build: ./client
+    container_name: jobtrackr-client
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+
+volumes:
+  mongodb_data:
+  uploads_data:
