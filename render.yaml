@@ -1,11 +1,9 @@
 services:
   - type: web
     name: job-tracker-api
-    env: node
-    region: oregon
-    rootDir: server
-    buildCommand: npm install
-    startCommand: node src/server.js
+    runtime: node
+    buildCommand: cd server && npm install
+    startCommand: cd server && node src/server.js
     envVars:
       - key: NODE_ENV
         value: production
