@@ -34,7 +34,7 @@ app.use('/api/', limiter);
 // CORS
 app.use(
   cors({
-    origin: config.CLIENT_URL,
+    origin: '*',
     credentials: true,
   })
 );
@@ -51,6 +51,22 @@ if (config.NODE_ENV === 'development') {
 
 // Static files - uploads
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+// Root landing route
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: '🚀 Job Application Tracker API is Live and Operational!',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      jobs: '/api/jobs',
+      companies: '/api/companies',
+      interviews: '/api/interviews',
+    },
+  });
+});
 
 // API routes
 app.use('/api/auth', authRoutes);
