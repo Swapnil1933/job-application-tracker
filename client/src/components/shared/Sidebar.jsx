@@ -2,6 +2,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import {
   HiOutlineHome,
   HiOutlineBriefcase,
+  HiOutlineGlobeAlt,
   HiOutlineOfficeBuilding,
   HiOutlineCalendar,
   HiOutlineUser,
@@ -11,6 +12,7 @@ import {
 const navItems = [
   { path: '/dashboard', label: 'Dashboard', icon: HiOutlineHome },
   { path: '/jobs', label: 'Applications', icon: HiOutlineBriefcase },
+  { path: '/live-jobs', label: 'Live Jobs', icon: HiOutlineGlobeAlt },
   { path: '/companies', label: 'Companies', icon: HiOutlineOfficeBuilding },
   { path: '/interviews', label: 'Interviews', icon: HiOutlineCalendar },
   { path: '/profile', label: 'Profile', icon: HiOutlineUser },

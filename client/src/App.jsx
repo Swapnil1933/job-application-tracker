@@ -10,6 +10,7 @@ import JobForm from './pages/JobForm';
 import CompanyList from './pages/CompanyList';
 import InterviewList from './pages/InterviewList';
 import Profile from './pages/Profile';
+import LiveJobs from './pages/LiveJobs';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="jobs/new" element={<JobForm />} />
         <Route path="jobs/:id" element={<JobDetail />} />
         <Route path="jobs/:id/edit" element={<JobForm />} />
+        <Route path="live-jobs" element={<LiveJobs />} />
         <Route path="companies" element={<CompanyList />} />
         <Route path="interviews" element={<InterviewList />} />
         <Route path="profile" element={<Profile />} />

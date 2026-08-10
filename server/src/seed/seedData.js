@@ -13,10 +13,13 @@ const Interview = require('../models/Interview');
 const Note = require('../models/Note');
 const Notification = require('../models/Notification');
 
-const seedData = async () => {
+const seedData = async (shouldConnect = true) => {
   try {
-    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/job-tracker');
-    console.log('✅ Connected to MongoDB for seeding');
+    if (shouldConnect) {
+      const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/job-tracker';
+      await mongoose.connect(uri);
+      console.log('✅ Connected to MongoDB for seeding');
+    }
 
     // Clear existing data
     await Promise.all([
@@ -240,11 +243,20 @@ const seedData = async () => {
     console.log('📧 Login: demo@example.com');
     console.log('🔑 Password: demo1234\n');
 
-    process.exit(0);
+    if (require.main === module) {
+      process.exit(0);
+    }
   } catch (error) {
     console.error('❌ Seed error:', error);
-    process.exit(1);
+    if (require.main === module) {
+      process.exit(1);
+    }
   }
 };
 
-seedData();
+module.exports = seedData;
+
+if (require.main === module) {
+  seedData();
+}
+

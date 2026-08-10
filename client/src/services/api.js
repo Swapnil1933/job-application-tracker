@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://job-application-tracker-2-zz18.onrender.com',
+  baseURL: import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5000' : 'https://job-application-tracker-2-zz18.onrender.com'),
   headers: {
     'Content-Type': 'application/json',
   },

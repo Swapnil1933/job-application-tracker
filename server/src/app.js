@@ -14,6 +14,7 @@ const companyRoutes = require('./routes/company.routes');
 const interviewRoutes = require('./routes/interview.routes');
 const noteRoutes = require('./routes/note.routes');
 const notificationRoutes = require('./routes/notification.routes');
+const externalJobRoutes = require('./routes/externalJob.routes');
 
 // Import middleware
 const { errorHandler, notFound } = require('./middleware/errorHandler');
@@ -23,10 +24,10 @@ const app = express();
 // Security middleware
 app.use(helmet());
 
-// Rate limiting
+// Rate limiting (generous limits for development/local use)
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,
+  max: config.NODE_ENV === 'development' ? 5000 : 500,
   message: { error: 'Too many requests, please try again later.' },
 });
 app.use('/api/', limiter);
@@ -64,6 +65,7 @@ app.get('/', (req, res) => {
       jobs: '/api/jobs',
       companies: '/api/companies',
       interviews: '/api/interviews',
+      externalJobs: '/api/external-jobs',
     },
   });
 });
@@ -75,6 +77,7 @@ app.use('/api/companies', companyRoutes);
 app.use('/api/interviews', interviewRoutes);
 app.use('/api/notes', noteRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/external-jobs', externalJobRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
